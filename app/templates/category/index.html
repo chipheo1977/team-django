@@ -1,0 +1,56 @@
+{% extends '../base.html' %} {%block content %}
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh sách danh mục</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+          <i class="fas fa-times"></i>
+        </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width:15%">Mã danh mục</th>
+                        <th>Tên danh mục</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </tbody>
+                {% for c in listCate %}
+                <tr>
+                    <td>{{ c.id }}</td>
+                    <td>{{ c.name }}</td>
+                    <td>
+                        {%if c.status == 0%} ẩn {%endif%} {%if c.status == 1%} hiển thị {%endif%}
+                    </td>
+                    <td>
+                        <a href="/staff/category/update/{{ c.id }}" class="btn btn-secondary">Sửa</a>
+                        <a href="javascript:deleteCategory({{ c.id }})" class="btn btn-danger">Xóa</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer"></div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+</section>
+{%endblock%} {%block js%}
+<script type="text/javascript">
+    function deleteCategory(id) {
+        if (confirm('Bạn có muốn xóa?')) {
+            location.href = '/staff/category/delete/' + id;
+        }
+    }
+</script>
+{%endblock%}

@@ -1,0 +1,64 @@
+{% extends '../base.html' %} {%block content %}
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh sách sản phẩm</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+          <i class="fas fa-times"></i>
+        </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width:15%">Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Danh mục</th>
+                        <th>Giá</th>
+                        <th>Mô tả</th>
+                        <th>Ảnh</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </tbody>
+                {% for p in products %}
+                <tr>
+                    <td>{{ p.code }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.category }}</td>
+                    <td>{{ p.price }}</td>
+                    <td>{{ p.content }}</td>
+                    <td style="width: 25%;"><img src="/{{ p.image }}" style="max-width:200px; max-height:300px"></td>
+                    <td>
+                        {%if p.status == 0%} ẩn {%endif%} {%if p.status == 1%} hiển thị {%endif%}
+                    </td>
+                    <td>
+                        <a href="/staff/product/update/{{ p.id }}" class="btn btn-secondary">Sửa</a>
+                        <a href="javascript:deleteCategory({{ p.id }})" class="btn btn-danger">Xóa</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer"></div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+</section>
+{%endblock%} {%block js%}
+<script type="text/javascript">
+    function deleteCategory(id) {
+        if (confirm('Bạn có muốn xóa?')) {
+            location.href = '/staff/product/delete/' + id;
+        }
+    }
+</script>
+{%endblock%}

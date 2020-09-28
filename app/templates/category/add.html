@@ -1,0 +1,83 @@
+ {% extends '../base.html' %} {%block content %}
+
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Title</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+          <i class="fas fa-times"></i>
+        </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <form action="" method="post">
+                {%csrf_token%}
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Tên danh mục</label> {{ form.name }} {{form.name.errors}}
+                </div>
+                <div class="form-group">
+                    <label>slug danh mục</label> {{ form.slug }} {{form.slug.errors}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Hiện thị :</label> {{ form.status }}
+                </div>
+
+
+                <button class="btn btn-primary" type="submit">Lưu lại</button>
+            </form>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer"></div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+</section>
+
+
+
+{%endblock%} {%block js%}
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        $("form input").addClass("form-control");
+    });
+
+    $('input#id_name').keyup(function(event) {
+        var title, slug;
+        //Lấy text từ thẻ input title 
+        title = $(this).val();
+        //Đổi chữ hoa thành chữ thường
+        slug = title.toLowerCase();
+        //Đổi ký tự có dấu thành không dấu
+        slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+        slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+        slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+        slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+        slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+        slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+        slug = slug.replace(/đ/gi, 'd');
+        //Xóa các ký tự đặt biệt
+        slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, '');
+        //Đổi khoảng trắng thành ký tự gạch ngang
+        slug = slug.replace(/ /gi, "-");
+        //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
+        //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
+        slug = slug.replace(/\-\-\-\-\-/gi, '-');
+        slug = slug.replace(/\-\-\-\-/gi, '-');
+        slug = slug.replace(/\-\-\-/gi, '-');
+        slug = slug.replace(/\-\-/gi, '-');
+        //Xóa các ký tự gạch ngang ở đầu và cuối
+        slug = '@' + slug + '@';
+        slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+        //In slug ra textbox có id “slug”
+        $('input#id_slug').val(slug);
+    });
+</script>
+{%endblock%}
