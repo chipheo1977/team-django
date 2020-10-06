@@ -1,4 +1,5 @@
-{% extends '../base.html' %} {%block content %}
+{% extends '../base.html' %}
+{%block content %}
 <section class="content">
     <!-- Default box -->
     <div class="card">
@@ -22,7 +23,6 @@
                         <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
                         <th>Giá</th>
-                        <th>Mô tả</th>
                         <th>Ảnh</th>
                         <th>Trạng thái</th>
                         <th></th>
@@ -33,14 +33,14 @@
                     <td>{{ p.code }}</td>
                     <td>{{ p.name }}</td>
                     <td>{{ p.category }}</td>
-                    <td>{{ p.price }}</td>
-                    <td>{{ p.content }}</td>
-                    <td style="width: 25%;"><img src="/{{ p.image }}" style="max-width:200px; max-height:300px"></td>
+                    <td>{{ p.price }} <b>VNĐ</b> </td>
+                   
                     <td>
-                        {%if p.status == 0%} ẩn {%endif%} {%if p.status == 1%} hiển thị {%endif%}
+                        {%if p.product.status == 0%} ẩn {%endif%} {%if p.product.status == 1%} hiển thị {%endif%}
                     </td>
                     <td>
                         <a href="/staff/product/update/{{ p.id }}" class="btn btn-secondary">Sửa</a>
+                        <a href="/staff/product/detail/{{ p.id }}" class="btn btn-success">Chi tiết</a>
                         <a href="javascript:deleteCategory({{ p.id }})" class="btn btn-danger">Xóa</a>
                     </td>
                 </tr>
@@ -53,7 +53,8 @@
     </div>
     <!-- /.card -->
 </section>
-{%endblock%} {%block js%}
+{%endblock%}
+{%block js%}
 <script type="text/javascript">
     function deleteCategory(id) {
         if (confirm('Bạn có muốn xóa?')) {

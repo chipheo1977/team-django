@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Category(models.Model):
@@ -11,12 +12,12 @@ class Category(models.Model):
         return self.name
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Danh mục')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Danh mục')
     code = models.CharField(max_length=10, verbose_name='Mã', unique=True)
     name = models.CharField(max_length=200, verbose_name='Tên', unique=True)
-    slug = models.CharField(max_length=200, verbose_name='Slug danh mục', unique=True,null=True, blank=True)
-    image = models.ImageField(upload_to='static/images', verbose_name='Ảnh')
-    image_list = models.CharField(max_length=500, verbose_name='Ảnh chi tiết', null=True, blank=True)
+    slug = models.CharField(max_length=200, verbose_name='Tên SEO',null=True, blank=True)
+    #image = models.ImageField(upload_to='static/images', verbose_name='Ảnh', null=True, blank=True)
+    #image_list = models.CharField(max_length=500, verbose_name='Ảnh chi tiết', null=True, blank=True)
     price = models.FloatField(verbose_name='giá')
     discount = models.FloatField(default=None, verbose_name='giảm giá', null=True, blank=True)
     content = models.TextField(max_length=500, verbose_name='mô tả', null=True, blank=True)
@@ -24,6 +25,16 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+def get_image_filename(instance, filename):
+    name = instance.Product.name
+    slug = slugify(name)
+    return "static/images/%s-%s" % (slug, filename)
+    
+class ImagesProduct(models.Model):
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    #main_image = models.ImageField(upload_to='static/images/', verbose_name='ảnh chính', null=True, blank=True)
+    image = models.ImageField(upload_to='static/images/', verbose_name='ảnh chi tiết')
 
 class Customer(models.Model):
     code = models.CharField(max_length=10, verbose_name='Mã', unique=True)

@@ -1,0 +1,41 @@
+{% extends '../base.html' %}
+{%block content %}
+<div class="card-body">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th style="width:5%">Mã sản phẩm</th>
+                <th>Tên sản phẩm</th>
+                <th>Tên SEO sản phẩm</th>
+                
+                <th>Mô tả</th>
+                <th>Ảnh 1</th>
+                <th>Ảnh 2</th>
+                <th>Ảnh 3</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+        </tbody>
+        <tr>
+            <td>{{ p.code }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.slug }}</td>
+            
+            <td>{{ p.content }}</td>
+            {% for img in imgP %}
+                {% if p.code == img.product.code %}
+                <td style="width: 25%;"><img src="/{{ img.image }}" style="max-width:200px; max-height:300px"></td>
+                {% endif %}
+            {% endfor %}
+            <td>
+                {%if p.status == 0%} ẩn {%endif%} {%if p.status == 1%} hiển thị {%endif%}
+            </td>
+            <td>
+                <a href="/staff/product/update/{{ p.id }}" class="btn btn-secondary">Sửa</a>
+                <a href="/staff/product/detail/{{ p.id }}" class="btn btn-success">Chi tiết</a>
+                <a href="javascript:deleteCategory({{ p.id }})" class="btn btn-danger">Xóa</a>
+            </td>
+        </tr>
+    </table>
+</div>
+{%endblock%}

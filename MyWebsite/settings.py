@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'app',
+    'tinymce',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -3,6 +3,8 @@ from .views_staff import *
 from django.urls import include
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
+
     path('staff', index, name='staff'),
     path('staff/category/', listCategory, name='list-category'),
     path('staff/category/add', addCategory, name='add-category'),
@@ -12,7 +14,9 @@ urlpatterns = [
     path('staff/product/', listProduct, name='list-product'),
     path('staff/product/add', addProduct, name='add-product'), 
     path('staff/product/update/<pk>', updateProduct, name='update-product'),
+    path('staff/product/detail/<pk>', detailProduct, name='detail-product'),
     path('staff/product/delete/<pk>', deleteProduct, name='delete-product'),
 
     path('demo', demo, name='demo'),
+    path('tinymce', include('tinymce.urls'))
 ]

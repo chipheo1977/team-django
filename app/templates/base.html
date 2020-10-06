@@ -18,8 +18,22 @@
     <link rel="stylesheet" href="{% static 'admin/dist/css/adminlte.min.css' %}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        ul.errorlist{
+            color: red;
+            list-style-type: none;
+        }
+    </style>
+    <script type="text/javascript">
+        var base_url = function(){
+            
+        }
+        var akey = function(){
+            
+        }
+    </script>
 </head>
-
+<h1>{{current_path}}</h1>
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
     <div class="wrapper">
@@ -258,7 +272,11 @@
     <script src="{% static 'admin/dist/js/adminlte.min.js' %}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{% static 'admin/dist/js/demo.js' %}"></script>
-    {%block js%} {%endblock%}
+    <script src="{% static 'admin/dist/tinymce/tinymce.min.js' %}"></script>
+    <script src="{% static 'admin/dist/tinymce/config.js' %}"></script>
+    <script src="{% static 'admin/ckeditor/ckeditor.js' %}"></script>
+    {%block js%} 
+    {%endblock%}
 
 </body>
 
